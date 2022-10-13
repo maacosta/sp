@@ -1,24 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import { ThemeProvider, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Outlet } from "react-router-dom";
+import Header from './com/init/Header';
+import Menu from './com/init/Menu';
+import Content from './com/init/Content';
 import './App.css';
 
+const drawerWidth = 240;
+
 function App() {
+  const theme = useTheme();
+  const mobileBreakPoint = useMediaQuery(theme.breakpoints.down('sm'));
+  const [open, setOpen] = React.useState(true);
+  const handleToggleDrawer = (e: React.MouseEvent<HTMLElement>): void => {
+      setOpen(!open);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header handleMenuClick={handleToggleDrawer} drawerWidth={drawerWidth} mobileBreakPoint={mobileBreakPoint} />
+      <Menu handleMenuClick={handleToggleDrawer} drawerWidth={drawerWidth} mobileBreakPoint={mobileBreakPoint} open={open} />
+      <Content drawerWidth={drawerWidth} mobileBreakPoint={mobileBreakPoint}>
+        <Outlet />
+      </Content>
     </div>
   );
 }
