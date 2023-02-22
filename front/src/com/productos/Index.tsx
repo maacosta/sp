@@ -15,68 +15,40 @@ import { Plataforma } from "../../types/productos";
 import { TipoPlataforma } from "./TipoPlataforma";
 import { TipoFactores } from "./TipoFactores";
 import { Productos } from "./Productos";
-
-interface GridContainerProps {
-  children?: React.ReactNode;
-} 
-function GridContainer(props: GridContainerProps) {
-  return (
-    <Grid container direction="row" alignItems="start" justifyContent="flex-start" spacing={2}>
-      {props.children}
-    </Grid>
-  );
-}
-
-interface GridItemProps {
-  children?: React.ReactNode;
-} 
-function GridItem(props: GridItemProps) {
-  return (
-    <Grid item sm={12} md={6} lg={4}>
-      {props.children}
-    </Grid>
-  );
-}
+import { GridContainer } from "../common/GridCommon";
 
 export function Index() {
   const [idPlataforma, setIdPlataforma] = React.useState<number>();
-  const [idFactores, setIdFactores] = React.useState<number[]>();
+  const [idFactores, setIdFactores] = React.useState<(number | undefined)[]>();
 
-  const handlePlataformaOnChange = (id: number) => {
+  const handlePlataformaOnChange = (id?: number) => {
     setIdPlataforma(id);
   };
 
-  const handleFactoresOnChange = (ids: number[]) => {
-    if(idFactores === undefined) {
+  const handleFactoresOnChange = (ids: (number | undefined)[], pos: number) => {
+    if (idFactores === undefined) {
       setIdFactores(ids);
     } else {
       const v = [...idFactores];
-      const pos = ids.findIndex(e => e !== undefined);
       v[pos] = ids[pos];
-      setIdFactores(v);  
+      setIdFactores(v);
     }
   };
 
-  const handleProductoOnChange = (id: number) => {
+  const handleProductoOnSelection = (id: number) => {
     //setIdPlataforma(id);
   };
 
   return (
     <>
       <GridContainer>
-        <GridItem>
-          <TipoPlataforma valueSelected={idPlataforma} onChange={handlePlataformaOnChange} />
-        </GridItem>
+        <TipoPlataforma valueSelected={idPlataforma} onChange={handlePlataformaOnChange} />
       </GridContainer>
       <GridContainer>
-        <GridItem>
-          <TipoFactores idPlataforma={idPlataforma} valuesSelected={idFactores} onChange={handleFactoresOnChange} />
-        </GridItem>
+        <TipoFactores idPlataforma={idPlataforma} valuesSelected={idFactores} onChange={handleFactoresOnChange} />
       </GridContainer>
       <GridContainer>
-        <GridItem>
-          <Productos idFactores={idFactores} onChange={handleProductoOnChange} />
-        </GridItem>
+          <Productos idFactores={idFactores} onSelection={handleProductoOnSelection} />
       </GridContainer>
     </>
   );

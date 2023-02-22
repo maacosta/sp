@@ -1,15 +1,10 @@
 import React from "react";
-import { useQuery } from "react-query";
-import * as productosApi from "../../services/productos-api";
 import {
     FormControl,
-    Grid,
     InputLabel,
     MenuItem,
     Select,
     SelectChangeEvent,
-    SelectProps,
-    Typography
 } from "@mui/material";
 
 interface SelectCommonProps<T> {
@@ -22,6 +17,7 @@ interface SelectCommonProps<T> {
     onChange: (event: SelectChangeEvent<string>) => void;
     itemValue: (item: T) => any;
     itemText: (item: T) => any;
+    emptyItem?: boolean;
 }
 export function SelectCommon<T>(props: SelectCommonProps<T>) {
     return (
@@ -33,6 +29,7 @@ export function SelectCommon<T>(props: SelectCommonProps<T>) {
                 onChange={props.onChange}>
                 {props.error && <MenuItem disabled={true}>...error!</MenuItem>}
                 {props.loading && <MenuItem disabled={true}>...loading</MenuItem>}
+                {props.emptyItem && props.emptyItem === true && <MenuItem key={0} value={""}> - </MenuItem>}
                 {props.items && props.items.map(e => <MenuItem key={props.itemValue(e)} value={props.itemValue(e)}>{props.itemText(e)}</MenuItem>)}
             </Select>
         </FormControl>

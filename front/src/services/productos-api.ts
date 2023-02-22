@@ -17,7 +17,7 @@ export async function getTipoFactores(idPlataforma: number) {
   return res.json() as Promise<TipoFactor[]>;
 }
 
-export async function getProductos(idFactores: number[]) {
+export async function getProductos(idFactores: (number | undefined)[]) {
   let params = '';
   idFactores.forEach(e => {
     if(e !== undefined)
