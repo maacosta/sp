@@ -12,10 +12,6 @@ public class Plataforma {
 
     public Plataforma(){
     }
-    public Plataforma(int id, String nombre){
-        this.id = id;
-        this.nombre = nombre;
-    }
 
     public int getId() {
         return id;

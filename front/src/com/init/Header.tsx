@@ -55,11 +55,11 @@ function Header(props: HeaderProps) {
               >
                 <MenuIcon />
               </IconButton>
-              <img width="36" className='logo-s' src={process.env.PUBLIC_URL+"/imgs/brand/Logo-jst-blanco-vertical.png"} alt="JST - Admin" loading="lazy" />
+              <img width="36" className='logo-s' src={process.env.PUBLIC_URL+"/imgs/brand/Logo-jst-blanco-vertical.png"} alt="SP" loading="lazy" />
             </>
           }
           <Typography variant="h6" component="div">
-            Admin
+            SP
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           {data != null &&

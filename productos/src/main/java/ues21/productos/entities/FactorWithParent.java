@@ -1,25 +1,20 @@
 package ues21.productos.entities;
 
-import java.util.Set;
-
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table(name="Producto")
-public class Producto {
+@Table(name="Factor")
+public class FactorWithParent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "ProductoFactor", 
-        joinColumns = @JoinColumn(name = "IdProducto"),
-        inverseJoinColumns = @JoinColumn(name = "IdFactor"))
-    private Set<Factor> factores;
-
-    public Producto(){
-    }
+    @JsonBackReference
+    @ManyToOne //(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "IdTipoFactor")
+    private TipoFactor tipoFactor;
 
     public int getId() {
         return id;
@@ -35,7 +30,10 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public Set<Factor> getFactores(){
-        return factores;
+    public TipoFactor getTipoFactor() {
+        return tipoFactor;
+    }
+    public void setTipoFactor(TipoFactor tipoFactor){
+        this.tipoFactor = tipoFactor;
     }
 }

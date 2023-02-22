@@ -10,16 +10,6 @@ public class Factor {
     private int id;
     private String nombre;
     private int idTipoFactor;
-    //@ManyToMany(mappedBy = "factores")
-    //private Set<Producto> productos;
-
-    public Factor(){
-    }
-    public Factor(int id, String nombre, int idTipoFactor) {
-        this.id = id;
-        this.nombre = nombre;
-        this.idTipoFactor = idTipoFactor;
-    }
 
     public int getId() {
         return id;
@@ -35,10 +25,10 @@ public class Factor {
         this.nombre = nombre;
     }
 
-    public int getIdTipoFactor() {
+    public int getTipoFactor() {
         return idTipoFactor;
     }
-    public void setIdTipoFactor(int idTipoFactor){
+    public void setTipoFactor(int idTipoFactor){
         this.idTipoFactor = idTipoFactor;
     }
 }

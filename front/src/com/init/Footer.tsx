@@ -6,7 +6,7 @@ function Footer(props: any) {
   return (
     <>
       <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: 4 }}>
-        JST.Admin
+        SP
         {preval`
         let dh=new Intl.DateTimeFormat('es-AR',{year:"numeric", month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date());
         let d = dh.split("/");

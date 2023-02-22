@@ -15,7 +15,6 @@ public class ProductosController {
     private ProductoServ plataformaServ;
 
     public ProductosController() {
-        super();
     }
     
     @GetMapping("")

@@ -10,12 +10,11 @@ import ues21.productos.services.*;
 
 @RestController
 @RequestMapping("/plataformas")
-public class PlataformaController {
+public class PlataformasController {
     @Autowired
     private PlataformaServ plataformaServ;
 
-    public PlataformaController() {
-        super();
+    public PlataformasController() {
     }
     
     @GetMapping("")

@@ -1,6 +1,8 @@
 package ues21.productos.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,6 @@ public class ProductoServ {
     private ProductoRepo productoRepo;
 
     public ProductoServ() {
-        super();
     }
     
     public List<Producto> getAll() {
@@ -24,6 +25,14 @@ public class ProductoServ {
     }
 
     public List<Producto> getFiltered(List<Integer> idFactores) {
-        return productoRepo.getFiltered(idFactores);
+        List<Producto> res = new ArrayList<>();
+        
+        List<Producto> all = productoRepo.findAll();
+        for (Producto p : all) {
+            if (p.getFactores().stream().map(i -> i.getId()).toList().containsAll(idFactores))
+                res.add(p);
+        }    
+        
+        return res;
     }
 }

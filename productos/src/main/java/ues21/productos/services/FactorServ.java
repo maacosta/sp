@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ues21.productos.entities.Plataforma;
-import ues21.productos.repositories.PlataformaRepo;
+import ues21.productos.entities.*;
+import ues21.productos.repositories.*;
 
 @Service
 @Transactional
-public class PlataformaServ {
+public class FactorServ {
     @Autowired
-    private PlataformaRepo plataformaRepo;
+    private FactorRepo factorRepo;
 
-    public PlataformaServ() {
+    public FactorServ() {
     }
     
-    public List<Plataforma> getAll() {
-        return plataformaRepo.findAll();
+    public List<Factor> getFiltered(List<Integer> idTipoFactores) {
+        return factorRepo.getFiltered(idTipoFactores);
     }
 }
