@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import * as productosApi from "../../services/productos-api";
 import { 
+  Button,
   FormControl, 
   Grid, 
   InputLabel, 
@@ -15,11 +16,12 @@ import { Plataforma } from "../../types/productos";
 import { TipoPlataforma } from "./TipoPlataforma";
 import { TipoFactores } from "./TipoFactores";
 import { Productos } from "./Productos";
-import { GridContainer } from "../common/GridCommon";
+import { GridContainer, GridItem } from "../common/GridCommon";
 
 export function Index() {
   const [idPlataforma, setIdPlataforma] = React.useState<number>();
   const [idFactores, setIdFactores] = React.useState<(number | undefined)[]>();
+  const [deshabilitarNuevo, setDeshabilitarNuevo] = React.useState<boolean>(true);
 
   const handlePlataformaOnChange = (id?: number) => {
     setIdPlataforma(id);
@@ -35,8 +37,8 @@ export function Index() {
     }
   };
 
-  const handleProductoOnSelection = (id: number) => {
-    //setIdPlataforma(id);
+  const handleProductoOnChange = (count: number) => {
+    setDeshabilitarNuevo(count !== 0 || idPlataforma === undefined);
   };
 
   return (
@@ -48,7 +50,12 @@ export function Index() {
         <TipoFactores idPlataforma={idPlataforma} valuesSelected={idFactores} onChange={handleFactoresOnChange} />
       </GridContainer>
       <GridContainer>
-          <Productos idFactores={idFactores} onSelection={handleProductoOnSelection} />
+        <GridItem>
+          <Button variant="contained" disabled={deshabilitarNuevo}>Crear nuevo</Button>
+        </GridItem>
+      </GridContainer>
+      <GridContainer>
+        <Productos idFactores={idFactores} onChange={handleProductoOnChange} />
       </GridContainer>
     </>
   );
