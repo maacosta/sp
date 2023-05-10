@@ -4,28 +4,20 @@ import * as productosApi from "../../services/productos-api";
 import WorkIcon from '@mui/icons-material/Work';
 import ErrorIcon from '@mui/icons-material/Error';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Avatar,
-  FormControl,
-  Grid,
   IconButton,
-  InputLabel,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  SelectProps,
-  Typography
 } from "@mui/material";
-import { SelectCommon } from "../common/SelectCommon";
-import { Plataforma } from "../../types/productos";
-import { GridItem } from "../common/GridCommon";
+import EditIcon from '@mui/icons-material/Edit';
+import moment from "moment";
+import { Link } from "react-router-dom";
 
 interface ProductosProps {
+  idPlataforma?: number;
   idFactores?: (number | undefined)[];
   onChange: (count: number) => void;
 }
@@ -33,8 +25,8 @@ export function Productos(props: ProductosProps) {
   const { data: productos, status: productosStatus } = useQuery(["productos", props.idFactores],
     async () => {
       let r = null;
-      if(props.idFactores !== undefined && props.idFactores.some(i => i !== undefined)) {
-        r = await productosApi.getProductos(props.idFactores);
+      if (props.idFactores !== undefined && props.idFactores.some(i => i !== undefined)) {
+        r = await productosApi.getProductosByFactores(props.idFactores);
         props.onChange(r.length);
       }
       return r;
@@ -43,44 +35,42 @@ export function Productos(props: ProductosProps) {
 
   return (
     <>
-      <GridItem>
-        <List sx={{ width: '100%' }}>
-          {productosStatus === "error" &&
-            <ListItem>
+      <List sx={{ width: '100%' }}>
+        {productosStatus === "error" &&
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <ErrorIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="...error!" />
+          </ListItem>}
+        {productosStatus === "loading" &&
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <FindReplaceIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="...loading" />
+          </ListItem>
+        }
+        {productosStatus === "success" && productos !== null &&
+          productos.map((e, i) =>
+            <ListItem key={e.id} secondaryAction={
+              <IconButton component={Link} to={"/productos/edition/" + e.id + '?idPlataforma=' + props.idPlataforma} edge="end" aria-label="Modificar">
+                <EditIcon />
+              </IconButton>
+            }>
               <ListItemAvatar>
                 <Avatar>
-                  <ErrorIcon />
+                  <WorkIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="...error!" />
-            </ListItem>}
-          {productosStatus === "loading" &&
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <FindReplaceIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="...loading" />
+              <ListItemText primary={e.nombre} secondary={moment(e.vigenciaDesde).format('DD/MM/YY') + '-' + moment(e.vigenciaHasta).format('DD/MM/YY') + ' | ' + e.factores.map(i => i.nombre).join(', ')} />
             </ListItem>
-          }
-          {productosStatus === "success" && productos !== null &&
-            productos.map((e, i) =>
-              <ListItem key={e.id} secondaryAction={
-                <IconButton edge="end" aria-label="edit">
-                  <EditIcon />
-                </IconButton>
-              }>
-                <ListItemAvatar>
-                  <Avatar>
-                    <WorkIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={e.nombre} secondary={e.factores.map(i => i.nombre).join(', ')} />
-              </ListItem>
-            )}
-        </List>
-      </GridItem>
+          )}
+      </List>
     </>
   );
 }

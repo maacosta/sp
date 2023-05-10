@@ -58,7 +58,7 @@ function Menu(props: MenuProps) {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: props.drawerWidth },
         }}
       >
-        <img className='logo' src={process.env.PUBLIC_URL+"/imgs/brand/Logo-jst-color-horizontal.png"} alt="JST - Admin" loading="lazy" />
+        <img className='logo' src={process.env.PUBLIC_URL+"/imgs/Logo_de_la_Universidad_Siglo_21.svg"} alt="Siglo21 - Seminario de Practica" width="220" loading="lazy" />
         <List disablePadding>
           <MenuItem to="/productos" icon={<HomeIcon />} title="Productos"/>
         </List>

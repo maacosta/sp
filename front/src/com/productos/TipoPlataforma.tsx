@@ -23,7 +23,7 @@ export function TipoPlataforma(props: TipoPlataformaProps) {
   };
 
   return (
-    <GridItem>
+    <GridItem size="small">
       <SelectCommon<Plataforma>
         id={"lblTipoPlataforma"}
         name={"Tipo Plataforma"}

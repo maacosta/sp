@@ -18,7 +18,11 @@ public class TipoFactorServ {
     public TipoFactorServ() {
     }
     
-    public List<TipoFactor> getFiltered(Integer idPlataforma) {
+    public List<TipoFactor> getAll() {
+        return tipoFactorRepo.findAll();
+    }
+
+    public List<TipoFactor> getByPlataforma(Integer idPlataforma) {
         return tipoFactorRepo.getFiltered(idPlataforma);
     }
 }

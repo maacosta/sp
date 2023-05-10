@@ -13,11 +13,13 @@ export interface TipoFactor {
 export interface Factor {
   id: number;
   nombre: string;
-  idTipoFactor: number;
+  tipoFactor: number;
 }
 
 export interface Producto {
   id: number;
   nombre: string;
+  vigenciaDesde: string;
+  vigenciaHasta: string;
   factores: Factor[];
 }

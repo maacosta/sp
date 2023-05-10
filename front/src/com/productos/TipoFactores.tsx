@@ -8,6 +8,7 @@ import {
 import { SelectCommon } from "../common/SelectCommon";
 import { Factor, Plataforma, TipoFactor } from "../../types/productos";
 import { GridItem } from "../common/GridCommon";
+import { useTipoFactoresFetch } from "../hooks/useTipoFactoresFetch";
 
 interface TipoFactoresProps {
   idPlataforma?: number;
@@ -15,15 +16,13 @@ interface TipoFactoresProps {
   onChange: (ids: (number | undefined)[], pos: number) => void;
 }
 export function TipoFactores(props: TipoFactoresProps) {
-  const { data: tipoFactores, status: tipoFactoresStatus } = useQuery(["tipoFactores", props.idPlataforma],
-    () => props.idPlataforma !== undefined ? productosApi.getTipoFactores(props.idPlataforma) : null,
-    { enabled: props.idPlataforma !== undefined });
+  const [ data, status, error ] = useTipoFactoresFetch(props.idPlataforma);
 
   const handleOnChange = (event: SelectChangeEvent) => {
-    if (tipoFactores === undefined || tipoFactores === null)
+    if (data === undefined || data === null)
       return;
 
-    const arr = new Array<number | undefined>(tipoFactores.length);
+    const arr = new Array<number | undefined>(data.length);
     const pos = parseInt(event.target.name.split('_')[1]);
     arr[pos] = event.target.value === '' ? undefined : parseInt(event.target.value);
     props.onChange(arr, pos);
@@ -31,11 +30,11 @@ export function TipoFactores(props: TipoFactoresProps) {
 
   return (
     <>
-      {tipoFactoresStatus === "error" && <Typography>...error!</Typography>}
-      {tipoFactoresStatus === "loading" && <Typography>...loading</Typography>}
-      {tipoFactoresStatus === "success" && tipoFactores !== null &&
-        tipoFactores.map((e, i) =>
-          <GridItem key={i}>
+      {status === "error" && <Typography>{'ERROR: ' + error}</Typography>}
+      {status === "loading" && <Typography>...loading</Typography>}
+      {status === "success" &&
+        data?.map((e, i) =>
+          <GridItem size="small" key={i}>
             <SelectCommon<Factor> 
               id={"lblTipoFactor_" + i}
               name={e.nombre}

@@ -1,18 +1,7 @@
 import React from "react";
-import { useQuery } from "react-query";
-import * as productosApi from "../../services/productos-api";
-import { 
+import {
   Button,
-  FormControl, 
-  Grid, 
-  InputLabel, 
-  MenuItem, 
-  Select, 
-  SelectChangeEvent, 
-  Typography
 } from "@mui/material";
-import { SelectCommon } from "../common/SelectCommon";
-import { Plataforma } from "../../types/productos";
 import { TipoPlataforma } from "./TipoPlataforma";
 import { TipoFactores } from "./TipoFactores";
 import { Productos } from "./Productos";
@@ -50,12 +39,14 @@ export function Index() {
         <TipoFactores idPlataforma={idPlataforma} valuesSelected={idFactores} onChange={handleFactoresOnChange} />
       </GridContainer>
       <GridContainer>
-        <GridItem>
+        <GridItem size="full">
           <Button variant="contained" disabled={deshabilitarNuevo}>Crear nuevo</Button>
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <Productos idFactores={idFactores} onChange={handleProductoOnChange} />
+        <GridItem size="full">
+          <Productos idPlataforma={idPlataforma} idFactores={idFactores} onChange={handleProductoOnChange} />
+        </GridItem>
       </GridContainer>
     </>
   );

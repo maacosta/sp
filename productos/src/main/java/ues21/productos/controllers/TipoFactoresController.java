@@ -11,14 +11,21 @@ import ues21.productos.services.*;
 @RestController
 @RequestMapping("/tipofactores")
 public class TipoFactoresController {
-    @Autowired
+    
     private TipoFactorServ tipoFactorServ;
 
-    public TipoFactoresController() {
+    @Autowired
+    public TipoFactoresController(TipoFactorServ tipoFactorServ) {
+        this.tipoFactorServ = tipoFactorServ;
     }
     
+    @GetMapping("")
+    public List<TipoFactor> getAll() {
+        return tipoFactorServ.getAll();
+    }
+
     @GetMapping("{idPlataforma}")
-    public List<TipoFactor> getFiltered(@PathVariable Integer idPlataforma) {
-        return tipoFactorServ.getFiltered(idPlataforma);
+    public List<TipoFactor> getByPlataforma(@PathVariable Integer idPlataforma) {
+        return tipoFactorServ.getByPlataforma(idPlataforma);
     }
 }
